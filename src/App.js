@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, /* Redirect */ } from 'react-router-dom'
 
 const Menu = (props) => (
   <div>
@@ -10,8 +10,11 @@ const Menu = (props) => (
           <Link to="/create">create new</Link>&nbsp;
           <Link to="/about">about</Link>&nbsp;
         </div>
+        <div>{props.notification}</div>
+
         <Route exact path="/" render={() => <AnecdoteList anecdotes={props.anecdotes}/>} />
-        <Route path="/create" render={() => <CreateNew addNew={props.addNew}/>} />
+        <Route path="/create" render={({history}) => <CreateNew history={history} addNew={props.addNew}/> } />
+
         <Route path="/about" render={() => <About />} />
         <Route exact path="/anecdotes/:id"render={({match}) =>
           <Anecdote anecdote={props.anecdoteById(match.params.id)} />}
@@ -21,6 +24,18 @@ const Menu = (props) => (
     </Router>
   </div>
 )
+
+/* const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  return (
+    <div>
+      {message}
+    </div>
+  )
+} */
+
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
@@ -91,6 +106,7 @@ class CreateNew extends React.Component {
       info: this.state.info,
       votes: 0
     })
+    this.props.history.push('/')
   }
 
   render() {
@@ -145,7 +161,13 @@ class App extends React.Component {
 
   addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
-    this.setState({ anecdotes: this.state.anecdotes.concat(anecdote) })
+      this.setState({
+      anecdotes: this.state.anecdotes.concat(anecdote),
+      notification: `a new anecdote '${anecdote.content}' created!`
+    })
+    setTimeout(() => {
+      this.setState({notification: ''})
+}, 10000)
   }
 
   anecdoteById = (id) =>
@@ -168,7 +190,9 @@ class App extends React.Component {
     return (
       <div>
         <h1>Software anecdotes</h1>
-          <Menu anecdotes={this.state.anecdotes} addNew={this.addNew} anecdoteById={this.anecdoteById}/>
+          <Menu anecdotes={this.state.anecdotes} addNew={this.addNew} 
+          anecdoteById={this.anecdoteById} newCreated={this.newCreated} 
+          resetNewCreated={this.resetNewCreated} notification={this.state.notification}  />
         <Footer />
       </div>
     );
