@@ -1,16 +1,34 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link, /* Redirect */ } from 'react-router-dom'
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
 
-const Menu = (props) => (
+const Menu = (props) => {
+  const messageStyle = {
+    color: 'DimGray',
+    background: 'LavenderBlush',
+    fontSize: 18,
+  }
+  const menuBackgroundStyle = {
+    background: 'Lavender',
+    border: 1.4,
+    borderTopStyle: 'dashed',
+    borderRightStyle: 'solid',
+    borderBottomStyle: 'dashed',
+    borderLeftStyle: 'solid',
+    borderColor: 'blue',
+    borderRadius: 5,
+    fontSize: 18,
+    fontFamily: 'courier'
+  }
+  return(
   <div>
     <Router>
       <div>
-        <div>
-          <Link to="/">anecdotes</Link>&nbsp;
-          <Link to="/create">create new</Link>&nbsp;
-          <Link to="/about">about</Link>&nbsp;
+        <div style={menuBackgroundStyle}>
+          <NavLink exact to="/"  activeStyle={{ fontWeight: "bold",  color: "black"}} >anecdotes</NavLink>&nbsp;
+          <NavLink exact to="/create" activeStyle={{ fontWeight: "bold",  color: "black"}}>create new</NavLink>&nbsp;
+          <NavLink exact to="/about" activeStyle={{ fontWeight: "bold",  color: "black"}}>about</NavLink>&nbsp;
         </div>
-        <div>{props.notification}</div>
+        <div style={messageStyle}>{props.notification}</div>
 
         <Route exact path="/" render={() => <AnecdoteList anecdotes={props.anecdotes}/>} />
         <Route path="/create" render={({history}) => <CreateNew history={history} addNew={props.addNew}/> } />
@@ -23,7 +41,7 @@ const Menu = (props) => (
       </div>
     </Router>
   </div>
-)
+)}
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
@@ -31,7 +49,7 @@ const AnecdoteList = ({ anecdotes }) => (
     <ul>
       {anecdotes.map(anecdote =>      
         <li key={anecdote.id}>
-        <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>        
+        <NavLink to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</NavLink>        
       </li>)}
     </ul>  
   </div>
