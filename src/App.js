@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
+import { Container, Table } from 'semantic-ui-react'
 
 const Menu = (props) => {
   const messageStyle = {
@@ -46,12 +47,17 @@ const Menu = (props) => {
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote =>      
-        <li key={anecdote.id}>
-        <NavLink to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</NavLink>        
-      </li>)}
-    </ul>  
+    <Table striped> 
+      <Table.Body>
+        {anecdotes.map(anecdote =>      
+          <Table.Row key={anecdote.id}>
+            <Table.Cell>
+              <NavLink to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</NavLink>
+            </Table.Cell>
+          </Table.Row>
+        )}
+      </Table.Body>
+    </Table>
   </div>
 )
 const Anecdote = ({anecdote}) => {
@@ -194,13 +200,13 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <h1>Software anecdotes</h1>
           <Menu anecdotes={this.state.anecdotes} addNew={this.addNew} 
           anecdoteById={this.anecdoteById} newCreated={this.newCreated} 
           resetNewCreated={this.resetNewCreated} notification={this.state.notification}  />
         <Footer />
-      </div>
+      </Container>
     );
   }
 }
