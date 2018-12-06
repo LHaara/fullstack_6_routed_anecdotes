@@ -25,18 +25,6 @@ const Menu = (props) => (
   </div>
 )
 
-/* const Notification = ({ message }) => {
-  if (message === null) {
-    return null
-  }
-  return (
-    <div>
-      {message}
-    </div>
-  )
-} */
-
-
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
