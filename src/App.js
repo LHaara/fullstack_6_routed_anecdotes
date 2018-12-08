@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
-import { Container, Table } from 'semantic-ui-react'
+import { Container, Table, Grid, Image, Button, Input, Label } from 'semantic-ui-react'
+import image from './officespacebolton1280jpg-74e931_400w.jpg'
 
 const Menu = (props) => {
   const messageStyle = {
@@ -76,14 +77,21 @@ const Anecdote = ({anecdote}) => {
 const About = () => (
   <div>
     <h2>About anecdote app</h2>
-    <p>According to Wikipedia:</p>
-    
-    <em>An anecdote is a brief, revealing account of an individual person or an incident. 
-      Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself, 
-      such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative. 
-      An anecdote is "a story with a point."</em>
+    <Grid columns={2} padded>
+      <Grid.Column>
+        <p>According to Wikipedia:</p>
+        
+        <em>An anecdote is a brief, revealing account of an individual person or an incident. 
+          Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself, 
+          such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative. 
+          An anecdote is "a story with a point."</em>
 
-    <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
+        <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
+      </Grid.Column>
+      <Grid.Column>
+        <Image src={image} alt='tietojenkäsittelijä Michael Bolton' label={{ as: 'a', corner: 'right', icon: 'smile' }}/>
+      </Grid.Column>
+    </Grid>
   </div>
 )
 
@@ -127,18 +135,17 @@ class CreateNew extends React.Component {
         <h2>create a new anecdote</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
-            content 
-            <input name='content' value={this.state.content} onChange={this.handleChange} />
+             
+            <Input size='mini' name='content' placeholder='content' value={this.state.content} onChange={this.handleChange} />
+            <Label pointing='left'>Please enter content</Label>
           </div>
           <div>
-            author
-            <input name='author' value={this.state.author} onChange={this.handleChange} />
+            <Input size='mini' name='author'  placeholder='author' value={this.state.author} onChange={this.handleChange} />
           </div>
-          <div>
-            url for more info
-            <input name='info' value={this.state.info} onChange={this.handleChange} />
+          <div>            
+            <Input size='mini' label='http://' name='info' placeholder='url for more info' value={this.state.info} onChange={this.handleChange} />
           </div> 
-          <button>create</button>
+          <Button basic color='grey'>create</Button>
         </form>
       </div>  
     )
